@@ -1,0 +1,5 @@
+mysql-connector-python
+sqlalchemy
+flask
+jwt
+PyJWT

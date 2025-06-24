@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Enum
 from database.connection import Base
-
+from models.empleado_model import Empleado  # Importa la clase Empleado
 class TrabajadorRRHH(Base):
     __tablename__ = 'trabajador_rrhh'
     

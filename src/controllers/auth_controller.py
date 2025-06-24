@@ -5,6 +5,7 @@ from database.connection import session
 from models.supervisor_model import Supervisor
 from models.trabajador_model import TrabajadorRRHH
 from models.usuario_model import Trabajador
+from models.empleado_model import Empleado
 
 # Clave secreta para firmar los tokens (mantén esto seguro)
 SECRET_KEY = "Serenita lo mas grande"
@@ -26,12 +27,13 @@ def login():
     data = request.json
     usuario = data.get("usuario")
     contrasena = data.get("contrasena")
-
+    """
     # Buscar usuario en las tablas
     usuario_obj = session.query(Supervisor).filter_by(usuario=usuario).first() or \
                   session.query(TrabajadorRRHH).filter_by(usuario=usuario).first() or \
                   session.query(Trabajador).filter_by(usuario=usuario).first()
-
+"""
+    usuario_obj= session.query(empleado).filter_by(usuario=usuario).first()
     if usuario_obj and usuario_obj.contrasena == contrasena:  # Sin hashing por ahora
         token = generar_token(usuario_obj.usuario, usuario_obj.permisos)
         return jsonify({"mensaje": "Login exitoso", "token": token})

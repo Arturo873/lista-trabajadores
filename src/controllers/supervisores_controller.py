@@ -3,12 +3,14 @@ import jwt
 from database.connection import session
 from models.usuario_model import Trabajador
 from functools import wraps
-from auth_controller import SECRET_KEY
+#from auth_controller import SECRET_KEY
+from controllers.auth_controller import SECRET_KEY
 
 # Crear un blueprint para el Supervisor
 supervisor_bp = Blueprint("supervisor", __name__)
 
 # Middleware para verificar JWT y permisos
+
 def verificar_supervisor(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):

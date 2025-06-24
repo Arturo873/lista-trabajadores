@@ -1,4 +1,0 @@
-mysql-connect-python
-sqlalchemy
-flask
-jwt
