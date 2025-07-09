@@ -27,8 +27,30 @@ class EmpleadoCreate(BaseModel):
 class EmpleadoUpdate(BaseModel):
     nombre: Optional[str]
     usuario: Optional[str]
-    id_cargo: Optional[int]
+    #id_cargo: Optional[int]
     telefono: Optional[str]
     class Config:
             #orm_mode = True
             from_attributes = True
+
+
+
+
+class EmpleadoPerfil(BaseModel):
+   
+    rut: str
+    nombre: str
+    genero: GeneroEnum
+    direccion: str
+    telefono: str
+    fecha_ingreso: date
+    id_cargo: int
+    usuario: str
+    cargo: str
+    #contrasena: str
+    #fecha_despido: Optional[date] = None
+
+
+    model_config = {
+        "from_attributes": True
+    }

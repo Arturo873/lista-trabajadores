@@ -58,7 +58,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     if user is None:
         raise credentials_exception
 
-    return UserResponse(usuario=user.usuario, cargo=user.cargo.nombre_cargo,id_cargo=user.cargo.id_cargo)
+    return UserResponse(id=user.id_empleado,usuario=user.usuario, cargo=user.cargo.nombre_cargo,id_cargo=user.cargo.id_cargo)
 
 
 """

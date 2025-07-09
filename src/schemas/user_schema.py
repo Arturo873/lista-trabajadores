@@ -15,6 +15,7 @@ class UserLogin(BaseModel):
 from pydantic import BaseModel
 
 class UserResponse(BaseModel):
+    id:int
     usuario: str
     cargo: str
     id_cargo:int
