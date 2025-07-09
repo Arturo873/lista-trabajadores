@@ -30,4 +30,5 @@ class EmpleadoUpdate(BaseModel):
     id_cargo: Optional[int]
     telefono: Optional[str]
     class Config:
-            orm_mode = True
+            #orm_mode = True
+            from_attributes = True

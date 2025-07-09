@@ -21,6 +21,7 @@ from services.auth_services import get_password_hash, verify_password, create_ac
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+""""
 @router.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     # Buscar empleado por usuario o rut
@@ -36,7 +37,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
     token = create_access_token({"sub": empleado.usuario})
     return {"access_token": token, "token_type": "bearer"}
-
+"""
 #--------------------------------JEFE RECURSOS HUMANOS
 @router.get("/empleados/filtrar")
 def filtrar_empleados(
@@ -68,7 +69,8 @@ def filtrar_empleados(
 
 #--------------------------------PERSONAL RR HH
 @router.post("/registrar", status_code=status.HTTP_201_CREATED)
-def register(empleado: EmpleadoCreate, db: Session = Depends(get_db)):
+def register(empleado: EmpleadoCreate, db: Session = Depends(get_db),
+             user: UserResponse = Depends(permiso_por_cargo([2]))):
     # Verificar si usuario o rut ya existe
     existing_empleado = db.query(Empleado).filter(
         or_(
@@ -88,8 +90,8 @@ def register(empleado: EmpleadoCreate, db: Session = Depends(get_db)):
         fecha_ingreso=empleado.fecha_ingreso,
         id_cargo=empleado.id_cargo,
         usuario=empleado.usuario,
-        contrasena=empleado.contrasena,
-        fecha_despido=empleado.fecha_despido
+        contrasena=empleado.contrasena
+        #fecha_despido=empleado.fecha_despido
     )
     db.add(new_empleado)
     db.commit()
@@ -98,7 +100,8 @@ def register(empleado: EmpleadoCreate, db: Session = Depends(get_db)):
 
 #--------------------------------EMPLEADOS
 @router.get("/listarEmpleados")
-def mostrar_empleados(db: Session = Depends(get_db)):
+def mostrar_empleados(db: Session = Depends(get_db),
+                      user: UserResponse = Depends(permiso_por_cargo([3]))):
     empleados = db.query(Empleado).all()
     return empleados
 
@@ -117,7 +120,7 @@ router = APIRouter(
 
 
 
-
+#buscar empleado por id
 @router.get("/empleado{id}")
 def obtener_empleado(id: int, db: Session = Depends(get_db)):
     empleado = db.query(Empleado).filter(Empleado.id_empleado == id).first()
@@ -125,7 +128,7 @@ def obtener_empleado(id: int, db: Session = Depends(get_db)):
         return {"error": "Empleado no encontrado"}
     return empleado
 
-
+#actualizar empleado por id
 @router.put("/empleado/{id}")
 def actualizar_empleado(id: int, datos: EmpleadoUpdate, db: Session = Depends(get_db)):
     empleado = db.query(Empleado).filter(Empleado.id_empleado == id).first()
@@ -145,7 +148,7 @@ def actualizar_empleado(id: int, datos: EmpleadoUpdate, db: Session = Depends(ge
 
 
 #permite al usuario ver su nombre y cargo
-@router.get("/me", response_model=UserResponse)
+@router.get("/miCargo", response_model=UserResponse)
 def read_users_me(current_user: UserResponse = Depends(get_current_user)):
     return current_user
 
