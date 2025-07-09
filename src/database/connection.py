@@ -11,9 +11,16 @@ DATABASE_URL = "mysql+mysqlconnector://root:@127.0.0.1/correo_de_yury"
 # Crear el engine
 engine = create_engine(DATABASE_URL)
 
-# Crear session
+# Crear sessionmaker
 Session = sessionmaker(bind=engine)
-session = Session()
+
+# Función para obtener sesión de DB y cerrarla después (para usar con FastAPI)
+def get_db():
+    db = Session()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # Prueba opcional de conexión
 def test_connection():

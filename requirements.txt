@@ -1,5 +1,11 @@
 mysql-connector-python
 sqlalchemy
 flask
-jwt
+python-jose[cryptography]
 PyJWT
+fastapi
+uvicorn
+passlib[bcrypt]
+python-dotenv
+pydantic[email]
+python-multipart

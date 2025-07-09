@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import jwt
 from database.connection import session
-from models.usuario_model import Trabajador
+
 from functools import wraps
 #from auth_controller import SECRET_KEY
 from controllers.auth_controller import SECRET_KEY

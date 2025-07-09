@@ -4,7 +4,7 @@ import datetime
 from database.connection import session
 from models.supervisor_model import Supervisor
 from models.trabajador_model import TrabajadorRRHH
-from models.usuario_model import Trabajador
+from models.empleado_model import Trabajador
 from models.empleado_model import Empleado
 
 # Clave secreta para firmar los tokens (mantén esto seguro)
